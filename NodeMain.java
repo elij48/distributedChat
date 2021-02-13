@@ -78,7 +78,9 @@ public class NodeMain {
     
     //updateParticipants()
         //Note: should probably divide into ADD and SUBTRACT participants
-        
+        //should add or subtract a participant from the participants list
+        //called when we receive certain messages (such as another node
+        //is leaving or has entered the chat)
     
     
     
