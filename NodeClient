@@ -31,6 +31,8 @@ public class NodeClient
 				
 				// send a join message to one participant ( the port number is the unique id )
 				toServer.writeObject(joinMessage);
+				
+				// update the participants list ( not sure how to do this just yet )
 		
 				// use participant list to send a join message to all the other participants
 				
