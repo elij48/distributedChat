@@ -40,7 +40,7 @@ public class NodeClient
 				toServer.writeObject(joinMessage);
 				
 				// receive the participants list from the other participant
-				participants = fromServer.readObject;
+					// confused here
 				
 				// add the participants received from the other participant to the global list
 				while( participants[participantIndex] != 0 )
