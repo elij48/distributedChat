@@ -40,19 +40,18 @@ public class NodeClient
 				toServer.writeObject(joinMessage);
 				
 				// receive the participants list from the other participant
-				
-				
-				// close the connection
-				chatSocket.close();
-				toServer.close();
-				fromServer.close();
-		
 				// add the participants received from the other participant to our local and global list
 				while( (tempInt = fromServer.readInt()) != 0 )
 					{
 					participants[participantIndex] = tempInt;
 					NodeMain.addParticipants((double) tempInt, participants);
 					}
+				
+				
+				// close the connection
+				chatSocket.close();
+				toServer.close();
+				fromServer.close();
 				
 				// loop though participants to send a new join message to the rest of them
 				
@@ -71,7 +70,7 @@ public class NodeClient
 					{
 					
 					// open a connection
-					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
+					Socket chatSocket = new Socket(hostName, (int) participants[arrIndex]);
 		            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
 			
 					// send a leave message ( removing you from their list )
