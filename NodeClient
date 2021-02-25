@@ -40,11 +40,12 @@ public class NodeClient
 				toServer.writeObject(joinMessage);
 				
 				// receive the participants list from the other participant
-				// add the participants received from the other participant to our local and global list
-				while( (tempInt = fromServer.readInt()) != 0 )
+				participants = fromServer.readObject;
+				
+				// add the participants received from the other participant to the global list
+				while( participants[participantIndex] != 0 )
 					{
-					participants[participantIndex] = tempInt;
-					NodeMain.addParticipants((double) tempInt, participants);
+					NodeMain.addParticipants( participants[participantIndex] , participants );
 					}
 				
 				
@@ -54,7 +55,24 @@ public class NodeClient
 				fromServer.close();
 				
 				// loop though participants to send a new join message to the rest of them
-				
+				while( ( tempDouble = NodeMain.participantsList[arrIndex]) != 0 )
+					{
+					
+					// connect to current participant
+					Socket joinChatSocket = new Socket(hostName, (int) tempDouble);
+		            		ObjectOutputStream nodeToServer = new ObjectOutputStream(chatSocket.getOutputStream());
+					
+					// create special case join message
+		            
+					
+					// send the message to the server node
+		            
+					
+					// close the connection
+		            		joinChatSocket.close();
+					nodeToServer.close();
+					
+					}
 				
 				}
 		
