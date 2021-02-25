@@ -11,7 +11,8 @@ public class NodeClient
 		DataInputStream stdIn = new DataInputStream((System.in));
 		String hostName = "192.168.1.5";
 		int portNumber = 9000;
-		int participants[];
+		int[] participants;
+		int arrIndex;
 		
 		// while loop reading input string 
 		while ((userInput = stdIn.readLine()) != null)
@@ -22,14 +23,14 @@ public class NodeClient
 				{
 				// connect to one other participant
 				Socket chatSocket = new Socket(hostName, portNumber);
-	            ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
-	            DataInputStream fromServer = new DataInputStream(chatSocket.getInputStream());
+	            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
+	            		DataInputStream fromServer = new DataInputStream(chatSocket.getInputStream());
 		
 				// create a join message 
-				Message_Join newMessage = new Message_Join();
+				Message_Join joinMessage = new Message_Join();
 				
 				// send a join message to one participant ( the port number is the unique id )
-				toServer.writeObject(newMessage);
+				toServer.writeObject(joinMessage);
 		
 				// use participant list to send a join message to all the other participants
 				
@@ -43,32 +44,60 @@ public class NodeClient
 			// if it is a leave request
 			else if( userInput == "leave" )
 				{
+				
+				// set index to zero
+				arrIndex = 0;
 		
 				// while loop through the participants list
-		
+				while( arrIndex < participants.length )
+					{
+					
 					// open a connection
+					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
+		           		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
 			
 					// send a leave message ( removing you from their list )
+		           		Message_Leave leaveMessage = new Message_Leave();
 		
 					// close the connection
+		            		chatSocket.close();
+					toServer.close();
 		
 					// iterate to the next participant
+					arrIndex ++;
+					
+					}
 			
 				}
 		
 			// if it is a regular message
 			else
 				{
-		
+				
+				// set index to zero
+				arrIndex = 0;
+				
 				// loop through the participants in the participants list
-		
+				while( arrIndex < participants.length )
+					{
+					
 					// create a connection
+					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
+		            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
+		            
+		            		// initialize the message to be sent
+		            		Message newMessage = new Message(userInput);
 		
 					// send the message to be displayed to their screen
+		            		toServer.writeObject(newMessage);
 		
 					// close the connection
+		            		chatSocket.close();
+					toServer.close();
 		
 					// iterate to the next participant
+					arrIndex ++;
+					}
 			
 				}
 			}
