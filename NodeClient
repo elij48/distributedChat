@@ -1,42 +1,76 @@
+import java.io.*;
+import java.net.*;
+
 public class NodeClient 
 	{
-	public static void main(String args[])
+	public static void main(String args[] ) throws IOException
 		{
 		
+		// initialize variables
+		String userInput;
+		DataInputStream stdIn = new DataInputStream((System.in));
+		String hostName = "192.168.1.5";
+		int portNumber = 9000;
+		int participants[];
+		
 		// while loop reading input string 
+		while ((userInput = stdIn.readLine()) != null)
+			{
+			// if it is a join request
+			userInput = userInput.toLowerCase();
+			if( userInput == "join" )
+				{
+				// connect to one other participant
+				Socket chatSocket = new Socket(hostName, portNumber);
+	            ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
+	            DataInputStream fromServer = new DataInputStream(chatSocket.getInputStream());
 		
-		// if it is a join request
-		
-			// connect to one other participant
-		
-			// send a join message to one participant ( the port number is the unique id )
+				// create a join message 
+				Message_Join newMessage = new Message_Join();
+				
+				// send a join message to one participant ( the port number is the unique id )
+				toServer.writeObject(newMessage);
 		
 				// use participant list to send a join message to all the other participants
+				
+				// close the connection
+				chatSocket.close();
+				toServer.close();
+				fromServer.close();
+				
+				}
 		
-		// if it is a leave request
+			// if it is a leave request
+			else if( userInput == "leave" )
+				{
 		
-			// while loop through the participants list
+				// while loop through the participants list
 		
-				// open a connection
+					// open a connection
 			
-				// send a leave message ( removing you from their list )
+					// send a leave message ( removing you from their list )
 		
-				// close the connection
+					// close the connection
 		
-				// iterate to the next participant
+					// iterate to the next participant
+			
+				}
 		
-		// if it is a regular message
+			// if it is a regular message
+			else
+				{
 		
-			// loop through the participants in the participants list
+				// loop through the participants in the participants list
 		
-				// create a connection
+					// create a connection
 		
-				// send the message to be displayed to their screen
+					// send the message to be displayed to their screen
 		
-				// close the connection
+					// close the connection
 		
-				// iterate to the next participant
-		
+					// iterate to the next participant
+			
+				}
+			}
 		}
-	
 	}
