@@ -1,0 +1,42 @@
+public class NodeClient 
+	{
+	public static void main(String args[])
+		{
+		
+		// while loop reading input string 
+		
+		// if it is a join request
+		
+			// connect to one other participant
+		
+			// send a join message to one participant ( the port number is the unique id )
+		
+				// use participant list to send a join message to all the other participants
+		
+		// if it is a leave request
+		
+			// while loop through the participants list
+		
+				// open a connection
+			
+				// send a leave message ( removing you from their list )
+		
+				// close the connection
+		
+				// iterate to the next participant
+		
+		// if it is a regular message
+		
+			// loop through the participants in the participants list
+		
+				// create a connection
+		
+				// send the message to be displayed to their screen
+		
+				// close the connection
+		
+				// iterate to the next participant
+		
+		}
+	
+	}
