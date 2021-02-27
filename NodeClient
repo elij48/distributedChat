@@ -14,7 +14,7 @@ public class NodeClient
 		double[] participants;
 		int arrIndex;
 		int participantIndex;
-		int tempInt;
+		double tempDouble;
 		
 		// while loop reading input string 
 		while ((userInput = stdIn.readLine()) != null)
@@ -31,7 +31,7 @@ public class NodeClient
 				// connect to one other participant
 				Socket chatSocket = new Socket(hostName, portNumber);
 	            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
-	           	 	DataInputStream fromServer = new DataInputStream(chatSocket.getInputStream());
+	            		ObjectInputStream fromServer = new ObjectInputStream(chatSocket.getInputStream());
 		
 				// create a join message 
 				Message_Join joinMessage = new Message_Join();
@@ -40,15 +40,15 @@ public class NodeClient
 				toServer.writeObject(joinMessage);
 				
 				// receive the participants list from the other participant
-					// confused here
+				// not sure how to get list form the object / do I need to create a loop to set the values
+				
 				
 				// add the participants received from the other participant to the global list
 				while( participants[participantIndex] != 0 )
 					{
 					NodeMain.addParticipants( participants[participantIndex] , participants );
 					}
-				
-				
+					
 				// close the connection
 				chatSocket.close();
 				toServer.close();
@@ -63,6 +63,7 @@ public class NodeClient
 		            		ObjectOutputStream nodeToServer = new ObjectOutputStream(chatSocket.getOutputStream());
 					
 					// create special case join message
+		            		// need new special case in Message
 		            
 					
 					// send the message to the server node
@@ -73,6 +74,7 @@ public class NodeClient
 					nodeToServer.close();
 					
 					}
+				
 				
 				}
 		
@@ -117,7 +119,7 @@ public class NodeClient
 					{
 					
 					// create a connection
-					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
+					Socket chatSocket = new Socket(hostName, (int) participants[arrIndex]);
 		            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
 		            
 		            		// initialize the message to be sent
