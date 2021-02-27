@@ -3,15 +3,21 @@ import java.net.*;
 
 public class NodeClient 
 	{
-	public static void main(String args[] ) throws IOException
+	public void start( int portNumber ) throws IOException
 		{
+		
+		if (portNumber == 0 ) 
+    	{
+        System.err.println(
+        "Usage: java NodeMain <port number>");
+        System.exit(1);
+    	}
 		
 		// initialize variables
 		String userInput;
 		DataInputStream stdIn = new DataInputStream((System.in));
 		String hostName = "192.168.1.5";
-		int portNumber = 9000;
-		double[] participants;
+		int[] participants;
 		int arrIndex;
 		int participantIndex;
 		double tempDouble;
@@ -31,7 +37,7 @@ public class NodeClient
 				// connect to one other participant
 				Socket chatSocket = new Socket(hostName, portNumber);
 	            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
-	            		ObjectInputStream fromServer = new ObjectInputStream(chatSocket.getInputStream());
+	           		ObjectInputStream fromServer = new ObjectInputStream(chatSocket.getInputStream());
 		
 				// create a join message 
 				Message_Join joinMessage = new Message_Join();
@@ -44,10 +50,7 @@ public class NodeClient
 				
 				
 				// add the participants received from the other participant to the global list
-				while( participants[participantIndex] != 0 )
-					{
-					NodeMain.addParticipants( participants[participantIndex] , participants );
-					}
+				NodeMain.participantsList = participants;
 					
 				// close the connection
 				chatSocket.close();
@@ -63,7 +66,7 @@ public class NodeClient
 		            		ObjectOutputStream nodeToServer = new ObjectOutputStream(chatSocket.getOutputStream());
 					
 					// create special case join message
-		            		// need new special case in Message
+		            		// need new special case
 		            
 					
 					// send the message to the server node
@@ -90,7 +93,7 @@ public class NodeClient
 					{
 					
 					// open a connection
-					Socket chatSocket = new Socket(hostName, (int) participants[arrIndex]);
+					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
 		            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
 			
 					// send a leave message ( removing you from their list )
@@ -119,7 +122,7 @@ public class NodeClient
 					{
 					
 					// create a connection
-					Socket chatSocket = new Socket(hostName, (int) participants[arrIndex]);
+					Socket chatSocket = new Socket(hostName, participants[arrIndex]);
 		            		ObjectOutputStream toServer = new ObjectOutputStream(chatSocket.getOutputStream());
 		            
 		            		// initialize the message to be sent
