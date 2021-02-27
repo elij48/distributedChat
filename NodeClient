@@ -20,7 +20,7 @@ public class NodeClient
 		int[] participants;
 		int arrIndex;
 		int participantIndex;
-		double tempDouble;
+		int tempInt;
 		
 		// while loop reading input string 
 		while ((userInput = stdIn.readLine()) != null)
@@ -58,11 +58,11 @@ public class NodeClient
 				fromServer.close();
 				
 				// loop though participants to send a new join message to the rest of them
-				while( ( tempDouble = NodeMain.participantsList[arrIndex]) != 0 )
+				while( ( tempInt = NodeMain.participantsList[arrIndex]) != 0 )
 					{
 					
 					// connect to current participant
-					Socket joinChatSocket = new Socket(hostName, (int) tempDouble);
+					Socket joinChatSocket = new Socket(hostName, tempInt);
 		            		ObjectOutputStream nodeToServer = new ObjectOutputStream(chatSocket.getOutputStream());
 					
 					// create special case join message
